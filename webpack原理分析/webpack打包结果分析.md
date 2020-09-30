@@ -80,6 +80,12 @@ __webpack_require__函数中通过modules[moduleId].call(module.exports, module,
 
 
 
+##### js代码的引入打包
+
+a.js调用了b.js中的函数，以a.js作为入口，则b.js中的函数和a.js中的主函数会被打包成两个chunk, 都在默认参数modules对象中传入并赋不同的key值，通过__webpack_require__（moduleId）调用
+
+自执行函数尾回调a.js的chunk, b.js中的chunk被以__webpack_require__（bKey）的形式在a.js的chunk中调用 
+
 
 
 
@@ -103,3 +109,34 @@ __webpack_require__函数中通过modules[moduleId].call(module.exports, module,
 
 
 ### 4.css的打包过程
+
+##### css-loader
+
+`css-loader` 解释(interpret) `@import` 和 `url()` ，会 `import/require()` 后再解析(resolve)它们。
+
+使用该loader，可以解析出@import，url()，require()引入的css代码,并将其以eval函数的形式打包为一个chunk
+
+在打包后的文件中发现了’./src/test/test.css‘名字的chunk字段，
+
+![](./image/5.png)
+
+<font color="red">但是单独使用css-loader，引入的css代码并没有生效，还需要style-loader</font>
+
+##### style-loader
+
+Adds CSS to the DOM by injecting a `<style>` tag
+
+将css插入DOM元素
+
+用该loader处理css-loader处理后的数据，可以引入的css代码回插入到引入该bundle的html文件的header中,
+
+在打包文件中多了一些chunk片段，并且能发现插入的代码
+
+##### MiniCssExtractPlugin
+
+使用了MiniCssExtractPlugin.loader替代style-loader，可以将css文件进行独立拆分打包
+
+此时’./src/test/test.css‘名字的chunk字段的eval也没有内容
+
+![](./image/6.png)
+
