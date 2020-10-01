@@ -140,3 +140,10 @@ Adds CSS to the DOM by injecting a `<style>` tag
 
 ![](./image/6.png)
 
+##### less和less-loader
+
+Less-loader用于发现找到less代码，less模块负责编译处理less代码，两者共同完成less代码到css代码到处理
+
+##### postcss-loader
+
+Posts-loadr是webpack和postcss-loader通信的工具插件
