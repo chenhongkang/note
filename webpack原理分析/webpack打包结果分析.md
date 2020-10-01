@@ -10,9 +10,17 @@
 
 [hash:X] : 当代码发生改动时触发更新
 
-[chunkhash:X] : 
+<font color="red">某一个文件发生改变，则所有的hash都会发生变化，在小规模改动时效率低</font>
 
-[contenthash:X] : 
+[chunkhash:X] : 当chunk发生变化，chunk相关的hash会发生变化
+
+<font color="red">某一个文件发生改变,所有处于同一个chunk对应的bundle文件hash都会发生变化</font>
+
+[contenthash:X] : 当自身内容发生变化时触发更新
+
+<font color="red">自身的内容更新只会影响自身作的bundle文件，其他文件hash不会更新，最大限度利用浏览器的缓存</font>
+
+<font color='red'>其实三者主要也是影响颗粒度的问题</font>
 
 ##### mode
 
@@ -94,7 +102,7 @@ a.js调用了b.js中的函数，以a.js作为入口，则b.js中的函数和a.js
 
 ![](./image/2.png)
 
-从template参数中找到模版文件，根具chunks找到入口j s文件，打包成filename所指示的html文件名
+从template参数中找到模版文件，根具chunks找到引入对应的chunks的相关bundle文件，打包成filename所指示的html文件名
 
 模版中的代码
 
