@@ -36,7 +36,7 @@ Development: 开启部分利于开发的plugin
 
 https://www.webpackjs.com/loaders/
 
-(待展开)
+见loader.md文件
 
 ##### plugin
 

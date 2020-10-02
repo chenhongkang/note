@@ -31,3 +31,13 @@ webpack中使用需要添加postcss-loader进行通行<font color="red">（postc
 
 
 
+### browserslistrc
+
+浏览器的兼容配置文件，数据来自于Can I Use，为了给一些插件作为配置使用
+
+例如使用autoperfixer插件，会先从option -> package.json中的browserslist字段 -> .browserslistrc文件中查找浏览器配置，再给css代码添加上相应的头字段 
+
+<font color='red'>npx browserslist '条件' 可以展示出符合该条件的浏览器版本</font>
+
+文档： https://browserl.ist/ （停止维护）
+
