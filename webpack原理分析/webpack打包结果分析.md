@@ -155,3 +155,19 @@ Less-loader用于发现找到less代码，less模块负责编译处理less代码
 ##### postcss-loader
 
 Posts-loadr是webpack和postcss-loader通信的工具插件
+
+
+
+### 5.图片，字体的打包
+
+##### file-loader
+
+处理文件的loader, 可以用来处理图片和字体，打包后不会对原来文件做任何处理。
+
+js引入文件后,返回打包后的图片相对路径
+
+##### url-loader
+
+包含file-loader的所有功能
+
+有limit字段，可以把大小小于该字段的图片打包成base64字段
