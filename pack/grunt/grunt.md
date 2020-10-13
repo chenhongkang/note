@@ -33,7 +33,7 @@ module.exports = function(grunt){
 
 ​            },
 
-​			<font color='red'>js target</font>
+​			// <font color='red'>js target</font>
 
 ​            js: {
 
