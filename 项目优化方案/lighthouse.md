@@ -44,3 +44,6 @@ Set an explicit width and height on image elements to reduce layout shifts and i
 
 优化主线程的工作，可以减少首页引入js包的数量
 
+### 8.指定图片大小
+
+这样可以在构建布局树的时候直接确定图片大小，而不需要等到之后会流

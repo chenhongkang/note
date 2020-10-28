@@ -1,0 +1,22 @@
+<html>
+    <script>
+        /**
+         * 适用于惰性单例模式
+         * 可以使用createSingleMode创建不同的构造单粒模式的函数
+        */
+        let createSingleMode = function (fn) {
+            let result
+            return function () {
+                console.log(this)
+                return result || (result = fn.apply(this, arguments))
+            }
+        }
+        let initInstance = function (val) {
+            return { val }
+        }
+        let singleFunc = createSingleMode(initInstance)
+        let a = singleFunc(1)
+        let b = singleFunc(2)
+        console.log(b, a === b)
+    </script>
+</html>

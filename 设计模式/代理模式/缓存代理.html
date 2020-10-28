@@ -1,0 +1,22 @@
+<html>
+    <script>
+        /**
+         * 缓存代理
+         * 使用闭包实现
+         * 可以记录一些高耗能操作的结果，用内存，换速度
+        */
+        let mult = function (...list) {
+            console.log('handle mult function')
+            return list.reduce((pre, next) => pre * next)
+        }
+        let proxyMult = (function () {
+            let cache = {}
+            return function (...list) {
+                let key = list.join(',')
+                return cache[key] ?? (cache[key] = mult(...list))
+            }
+        })()
+        console.log(proxyMult(1,2,3,4,5,6,7,8,10))
+        console.log(proxyMult(1,2,3,4,5,6,7,8,10))
+    </script>
+</html>
