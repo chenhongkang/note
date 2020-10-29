@@ -1,0 +1,40 @@
+<html>
+    <script>
+        // 创建命令队列
+        // 这便是典型的命令模式
+        // 其实这也属于发布-订阅模式
+        let pos = { x: 0, y: 0}
+        let commandList = []
+        function up (length) {
+            pos.y += length
+        }
+        function down (length) {
+            pos.y -= length
+        }
+        function left (length) {
+            pos.x += length
+        }
+        function right (length) {
+            pos.x -= length
+        }
+        function addCommand (fn, length) {
+            commandList.push(
+                (function () {
+                    return function () {
+                        fn(length)
+                    }
+                })()
+            )
+        }
+        function operateCommand () {
+            commandList.forEach(fn => fn())
+        }
+        addCommand(up, 1)
+        addCommand(up, 2)
+        addCommand(up, 3)
+        addCommand(up, 4)
+        addCommand(up, 5)
+        operateCommand()
+        console.log(pos)
+    </script>
+</html>

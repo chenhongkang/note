@@ -1,0 +1,92 @@
+<html>
+    <script>
+        /**
+         * Promise实现原理
+         * then中的函数，存放在Promise对像中，在调用resolve或者reject函数的时候执行
+        */
+        function myPromise (fn) {
+            this.val = undefined
+            this.status = 'pending'
+            this.resolveFunc = null
+            this.rejectFunc = null
+            this.resolve = function (val) {
+                if (this.status == 'pending') {
+                    this.val = val
+                    this.status = 'fulfill'
+                    this.resolveFunc && this.resolveFunc()
+                }
+            }
+            this.reject = function (val) {
+                if (this.status == 'pending') {
+                    this.val = val
+                    this.status = 'fail'
+                    this.rejectFunc && this.rejectFunc()
+                }
+            }
+            this.then = function (onResolveFunc, onRejectFunc) {
+                let that = this
+                let newPromise = new myPromise ((resolve, reject) => {
+                    if (that.status == 'pending') {
+                        // 在pending状态时订阅传入函数，在resolve或者reject时调用
+                        onResolveFunc && (that.resolveFunc = function () {
+                            let result = onResolveFunc(this.val)
+                            this.check(newPromise, result, resolve, reject)
+                        })
+                        onRejectFunc && (that.rejectFunc = function () {
+                            let result = onRejectFunc(this.val)
+                            this.check(newPromise, result, resolve, reject)
+                        })
+                    } else if (that.status == 'fulfill') {
+                        let result = onResolveFunc ? onResolveFunc(this.val) : undefined
+                        this.check(newPromise, result, resolve, reject)
+                    } else if (that.status == 'fail') {
+                        let result = onRejectFunc ? onRejectFunc(this.val) : undefined
+                        this.check(newPromise, result, resolve, reject)
+                    }
+                })
+                return newPromise
+            }
+            // 判断then函数返回的值
+            this.check = function (promise1, promise2, resolve, reject) {
+                if (promise2 instanceof myPromise) {
+                    // 返回的是Promise对象，怎给该对象设置then函数
+                    promise2.then(resolve, reject)
+                } else {
+                    // 返回非Promise对象则直接resolve
+                    resolve(promise2)
+                }
+            }
+            // 绑定this指向
+            this.resolve = this.resolve.bind(this)
+            this.reject = this.reject.bind(this)
+            this.then = this.then.bind(this)
+            fn(this.resolve, this.reject)
+        }
+        
+        
+        let a = new myPromise((resolve, reject) => {
+            setTimeout(() => reject('Promise1'), 1000)
+        }).then(
+            res => { 
+                console.log(res)
+                return 'resolve Promise2'
+            },
+            res => { 
+                console.log(res)
+                return 'reject Promise2'
+            }
+        ).then(
+            res => { 
+                console.log(res)
+                return new myPromise((resolve, reject) => {
+                    setTimeout(() => resolve('Promise3'), 1000)
+                })
+            }
+        ).then(
+            res => { 
+                console.log(res + 1)
+                return 'resolve Promise4'
+            }
+        )
+    </script>
+</html>

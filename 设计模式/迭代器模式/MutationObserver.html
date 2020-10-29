@@ -1,0 +1,21 @@
+<html>
+    <script>
+        /**
+         * MutationObserver():
+         * 创建并返回一个新的 MutationObserver, 监听某个dom元素 它会在指定的DOM发生变化时被调用。
+         * 文档：https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver
+         * Mutation加入微任务队列
+        */
+        function flushCallbacks () {
+            console.log('change')
+        }
+        let counter = 1
+        const observer = new MutationObserver(flushCallbacks)
+        const textNode = document.createTextNode(String(counter))
+        observer.observe(textNode, {
+            characterData: true
+        })
+        counter = (counter + 1) % 2
+        textNode.data = String(counter)
+    </script>
+</html>
