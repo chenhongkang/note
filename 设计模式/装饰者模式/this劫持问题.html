@@ -1,0 +1,18 @@
+<html>
+    <script>
+        // 报错，这个时候_getElementById()和document.getElementById()中的this指向不同
+        // 导致this劫持问题
+
+        let _getElementById = document.getElementById
+        document.getElementById = function () {
+            alert('new')
+            _getElementById(arguments)
+        }
+        // 需要已当前的this作为执行环境，或者重新绑定this
+        // document.getElementById = function () {
+        //     alert('new')
+        //     _getElementById.apply(document, arguments)
+        // }
+        document.getElementById('body')
+    </script>
+</html>

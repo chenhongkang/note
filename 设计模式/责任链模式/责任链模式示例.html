@@ -1,0 +1,44 @@
+<html>
+    <script>
+        // vue nextTick调用顺序
+
+        
+        // 返回Promise
+        const getPromise = function () {
+            if(typeof Promise !== 'undefined' && isNative(Promise)) {
+                return Promise.resolve()
+            }
+            return false
+        }
+        // 返回MutationObserver
+        const getMutationObserve = function () {
+            if(!isIE && typeof MutationObserver !== 'undefined' && (
+                isNative(MutationObserver) ||
+                // PhantomJS and iOS 7.x
+                MutationObserver.toString() === '[object MutationObserverConstructor]')){
+                    const observer = new MutationObserver()
+                }
+                return false
+        }
+        // 返回setImmediate
+        const getImmediate = function () {
+            if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
+                return setImmediate()
+            }
+            return false
+        }
+        // 返回setTimeOut
+        const getSetTimeout = function () {
+            return setTimeout()
+        }
+        // 责任链实现
+        Function.prototype.after = function (fn) {
+            return function () {
+                fn()
+            }
+        }
+        
+        let timerFunc = getPromise.after(getMutationObserve).after(getImmediate).after(getSetTimeout)
+        console.log(timerFunc)
+    </script>
+</html>

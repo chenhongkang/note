@@ -1,0 +1,39 @@
+<html>
+    <body>
+        <script>
+            /**
+             * 资源池是将不用的对象存储下来，创建新对象时取出来，更改相应的属性
+             * 减小了创建对象的时间
+             * 增加了内存消耗
+            */
+            let objectPoolFactroy = function (fn) {
+                var objectPool = []
+                return {
+                    create: function () {
+                       return objectPool.length
+                            ? objectPool.shift()
+                            : fn.apply(this, arguments)
+                    },
+                    recover: function (objectNode) {
+                        objectPool.push(objectNode)
+                    }
+                }
+            }
+            let iframeFactory = new objectPoolFactroy(function () {
+                let iframeDom = document.createElement('iframe')
+                document.body.appendChild(iframeDom)
+                iframeDom.onload = function () {
+                    console.log('onload')
+                }
+                return iframeDom
+            })
+            let iframe1 = iframeFactory.create()
+            iframe1.src = 'http://qq.com'
+            let iframe2 = iframeFactory.create()
+            iframe2.src = 'http://qq.com'
+            iframeFactory.recover(iframe1)
+            iframe1 = iframeFactory.create()
+            iframe1.src = 'http://leetcode-cn.com/store/'
+        </script>
+    </body>
+</html>
