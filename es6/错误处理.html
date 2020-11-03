@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <style>
+            .multiline {
+                display: -webkit-box !important;
+                overflow: hidden;
+                
+                text-overflow: ellipsis;
+                word-break: break-all;
+                
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <img src="image1" alt="">
+        <img src="image2" alt="">
+        <img src="image3" alt="">
+    </body>
+    <script>
+        new Image().src = 'image4'
+        try {
+            console.log(1)
+            setTimeout(() => {throw new Error(2)}, 0)
+            console.log(3)
+            new Promise((resolve, reject) => {
+                resolve()
+            }).then(promise)
+        } catch(err) {
+            console.log(err)
+            console.log(4)
+        }
+        window.addEventListener('error', (err) => {
+            console.log(err)
+        })
+    </script>
+</html>
