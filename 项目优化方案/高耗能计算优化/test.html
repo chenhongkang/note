@@ -1,0 +1,12 @@
+<html>
+    <script>
+        console.log('a')
+        // let worker = new Worker('./test.js')
+        window.requestIdleCallback(function () {
+            for(i = 0; i < 10000; i++){
+                console.log(1)
+            }
+        })
+        console.log('b')
+    </script>
+</html>
