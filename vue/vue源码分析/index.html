@@ -1,0 +1,51 @@
+<html>
+    <body>
+        <div id="app">
+            {{ message }}
+            <br>
+            {{ _uid }}
+            <button v-on:click="emitClick">click</button>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+        </div>
+        <script src="./vue.js"></script>
+        <script>
+            let freeze = Object.freeze({a:1, b:2})
+            Vue.component('button-counter', {
+                data: function () {
+                    return {
+                        count: 0
+                    }
+                },
+                template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+            })
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message: 'Hello Vue!',
+                    _uid: 'methods',
+                    obj: {
+                        a: 1,
+                        b: 2
+                    },
+                    freeze,
+                    arr: [1,2,3,4]
+                },
+                // components: {
+                //     buttonCounter
+                // }
+                created () {
+                    this.$on('myClick', function (val) { console.log(this.$data) })
+                },
+                methods: {
+                    emitClick () {
+                        this.$emit('myClick', 'myClick')
+                    }
+                }
+            })
+            console.log(Vue.options)
+        </script>
+    </body>
+</html>
