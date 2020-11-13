@@ -3550,6 +3550,7 @@
         // when parent component is patched.
         currentRenderingInstance = vm;
         vnode = render.call(vm._renderProxy, vm.$createElement);
+        // console.log('vnode', vnode)
       } catch (e) {
         handleError(e, vm, "render");
         // return error render result,
@@ -3949,6 +3950,7 @@
         // updates
         vm.$el = vm.__patch__(prevVnode, vnode);
       }
+      console.log('_update', vnode , vm.$el)
       restoreActiveInstance();
       // update __vue__ reference
       if (prevEl) {
@@ -6462,7 +6464,7 @@
         if (isDef(oldVnode)) { invokeDestroyHook(oldVnode); }
         return
       }
-
+      debugger
       var isInitialPatch = false;
       var insertedVnodeQueue = [];
 

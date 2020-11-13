@@ -4,6 +4,7 @@
             {{ message }}
             <br>
             {{ _uid }}
+            {{ uid }}
             <button v-on:click="emitClick">click</button>
             <button-counter></button-counter>
             <button-counter></button-counter>
@@ -26,6 +27,7 @@
                 data: {
                     message: 'Hello Vue!',
                     _uid: 'methods',
+                    uid: 0,
                     obj: {
                         a: 1,
                         b: 2
@@ -37,7 +39,7 @@
                 //     buttonCounter
                 // }
                 created () {
-                    this.$on('myClick', function (val) { console.log(this.$data) })
+                    this.$on('myClick', function (val) { console.log(this.$data); this.uid ++ })
                 },
                 methods: {
                     emitClick () {
